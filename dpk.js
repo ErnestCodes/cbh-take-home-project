@@ -5,9 +5,14 @@ const sha3_512HexDigest = (data) => {
 };
 
 exports.deterministicPartitionKey = (event) => {
+  const TRIVIAL_PARTITION_KEY = "0";
   const MAX_PARTITION_KEY_LENGTH = 256;
 
-  if (!event || !event.partitionKey) {
+  if (!event) {
+    return TRIVIAL_PARTITION_KEY;
+  }
+
+  if (!event.partitionKey) {
     return sha3_512HexDigest(JSON.stringify(event));
   }
 
